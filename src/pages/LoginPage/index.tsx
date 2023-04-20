@@ -6,7 +6,7 @@ import { StyledButtonLink } from '../../styles/button';
 import { StyledContainer, StyledGridBox } from '../../styles/grid';
 import { StyledParagraph, StyledTitle } from '../../styles/typography';
 
-const LoginPage = () => (
+export const LoginPage = () => (
   <StyledLoginPage>
     <StyledContainer>
       <div className='flexGrid'>
@@ -36,4 +36,3 @@ const LoginPage = () => (
   </StyledLoginPage>
 );
 
-export default LoginPage;

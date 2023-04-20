@@ -1,25 +1,44 @@
-import CartProductCard from './CartProductCard';
+import { CartProductCard } from "./CartProductCard";
 
-import { StyledCartProductList } from './style';
-import { StyledButton } from '../../../styles/button';
-import { StyledParagraph } from '../../../styles/typography';
+import { StyledCartProductList } from "./style";
+import { StyledButton } from "../../../styles/button";
+import { StyledParagraph } from "../../../styles/typography";
+import { useContext } from "react";
+import { CartContext } from "../../../providers/CartProvider";
 
-const CartProductList = () => (
-  <StyledCartProductList>
-    <ul>
-      <CartProductCard />
-    </ul>
+export const CartProductList = () => {
+  const { cartProducts, removeAll } = useContext(CartContext);
+  // console.log(cartProducts);
 
-    <div className='totalBox'>
-      <StyledParagraph>
-        <strong>Total</strong>
-      </StyledParagraph>
-      <StyledParagraph className='total'>R$ 14,00</StyledParagraph>
-    </div>
-    <StyledButton $buttonSize='default' $buttonStyle='gray'>
-      Remover todos
-    </StyledButton>
-  </StyledCartProductList>
-);
+  if (cartProducts.length > 0) {
+    const total = cartProducts
+      .reduce((previousValue, currentValue) => {
+        return previousValue + currentValue.price;
+      }, 0)
+      .toLocaleString("pt-br", { minimumFractionDigits: 2 });
 
-export default CartProductList;
+    return (
+      <StyledCartProductList>
+        <ul>
+          {cartProducts.map((product) => (
+            <CartProductCard key={product.id} product={product} />
+          ))}
+        </ul>
+
+        <div className="totalBox">
+          <StyledParagraph>
+            <strong>Total</strong>
+          </StyledParagraph>
+          <StyledParagraph className="total">R$ {total}</StyledParagraph>
+        </div>
+        <StyledButton
+          $buttonSize="default"
+          $buttonStyle="gray"
+          onClick={() => removeAll()}
+        >
+          Remover todos
+        </StyledButton>
+      </StyledCartProductList>
+    );
+  }
+};

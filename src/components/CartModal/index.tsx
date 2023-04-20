@@ -1,38 +1,50 @@
-import { MdClose } from 'react-icons/md';
-import CartProductList from './CartProductList';
+import { MdClose } from "react-icons/md";
+import { CartProductList } from "./CartProductList";
+import { StyledCartModalBox } from "./style";
+import { StyledParagraph, StyledTitle } from "../../styles/typography";
+import { useContext } from "react";
+import { CartContext } from "../../providers/CartProvider";
 
-import { StyledCartModalBox } from './style';
-import { StyledParagraph, StyledTitle } from '../../styles/typography';
+// interface ICartProductList{
+//   cartProducts: () => JSX.Element | undefined;
+// }
 
-const CartModal = () => (
-  <StyledCartModalBox>
-    <dialog>
-      <header>
-        <StyledTitle tag='h2' $fontSize='three'>
-          Carrinho de compras
-        </StyledTitle>
-        <button
-          type='button'
-          aria-label='Fechar'
-          onClick={() => {
-            console.log('Lógica aqui');
-          }}
-        >
-          <MdClose size={21} />
-        </button>
-      </header>
-      <div className='cartBox'>
-        <CartProductList />
+export const CartModal = () => {
+  const { cartProducts, setIsCartModalOpen } = useContext(CartContext);
 
-        <div className='emptyBox'>
-          <StyledTitle tag='h3' $fontSize='three' textAlign='center'>
-            Sua sacola está vazia
+  return (
+    <StyledCartModalBox>
+      <dialog>
+        <header>
+          <StyledTitle tag="h2" $fontSize="three">
+            Carrinho de compras
           </StyledTitle>
-          <StyledParagraph textAlign='center'>Adicione itens</StyledParagraph>
-        </div>
-      </div>
-    </dialog>
-  </StyledCartModalBox>
-);
+          <button
+            type="button"
+            aria-label="Fechar"
+            onClick={() => {
+              setIsCartModalOpen(false);
+            }}
+          >
+            <MdClose size={21} />
+          </button>
+        </header>
 
-export default CartModal;
+        <div className="cartBox">
+          {cartProducts.length > 0 ? (
+            <CartProductList/>
+          ) : (
+            <div className="emptyBox">
+              <StyledTitle tag="h3" $fontSize="three" textAlign="center">
+                Sua sacola está vazia
+              </StyledTitle>
+              <StyledParagraph textAlign="center">
+                Adicione itens
+              </StyledParagraph>
+            </div>
+          )}
+        </div>
+      </dialog>
+    </StyledCartModalBox>
+  );
+};
