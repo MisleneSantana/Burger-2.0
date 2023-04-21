@@ -4,8 +4,9 @@ import { StyledParagraph } from "../../../styles/typography";
 import { CartProductCard } from "./CartProductCard";
 import { useContext } from "react";
 import { CartContext } from "../../../providers/CartProvider";
+import { Error } from "../../Error";
 
-export const CartProductList: any = () => {
+export const CartProductList = () => {
   const { cartProducts, setIsCartModalOpen, setCountProducts, removeAll } =
     useContext(CartContext);
 
@@ -41,5 +42,7 @@ export const CartProductList: any = () => {
         </StyledButton>
       </StyledCartProductList>
     );
+  }else{
+    return <Error/>
   }
 };

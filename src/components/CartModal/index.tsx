@@ -4,7 +4,6 @@ import { StyledCartModalBox } from "./style";
 import { StyledParagraph, StyledTitle } from "../../styles/typography";
 import { useContext } from "react";
 import { CartContext } from "../../providers/CartProvider";
-import { any } from "zod";
 
 export const CartModal = () => {
   const { cartProducts } = useContext(CartContext);

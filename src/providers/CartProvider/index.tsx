@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { ISearchFormData } from "../../components/Header/SearchForm";
-import { any } from "zod";
 
 export interface ICartProviderProps {
   children: React.ReactNode;
@@ -50,7 +49,10 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const { data } = await api.get<IProduct[]>("/products");
+        const userToken = localStorage.getItem("@TOKEN");
+        const { data } = await api.get<IProduct[]>("/products", {
+          headers: { Authorization: `Bearer ${userToken}` },
+        });
         setProductsList(data);
         setIsFiltered(false);
       } catch (error) {
@@ -82,10 +84,12 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
         autoClose: 2000,
       });
     } else {
-      const productAdd: any = productsList.find(
+      const productAdd = productsList.find(
         (product) => product.id === productId
       );
-      setCartProducts([...cartProducts, productAdd]);
+
+      //
+      setCartProducts([...cartProducts, productAdd] as IProduct[]);
     }
   };
 
