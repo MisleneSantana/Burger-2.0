@@ -10,11 +10,8 @@ export interface IProductCard {
 }
 
 export const ProductCard = ({ product }: IProductCard) => {
-  const {
-    addProductToCart,
-    setIsFiltered,
-    setProductsList,
-  } = useContext(CartContext);
+  const { addProductToCart, setIsFiltered, setProductsList, sumProductsInTheCart } =
+    useContext(CartContext);
 
   const handleClickAndLoadProducts = (product: IProduct) => {
     setIsFiltered(false);
@@ -52,7 +49,7 @@ export const ProductCard = ({ product }: IProductCard) => {
         <StyledButton
           $buttonSize="medium"
           $buttonStyle="green"
-          onClick={() => handleClickAndLoadProducts(product)}
+          onClick={() => {handleClickAndLoadProducts(product), sumProductsInTheCart()}}
         >
           Adicionar
         </StyledButton>

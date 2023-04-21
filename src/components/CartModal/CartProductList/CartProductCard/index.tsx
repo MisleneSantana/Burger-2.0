@@ -10,7 +10,8 @@ interface IProductCart {
 }
 
 export const CartProductCard = ({ product }: IProductCart) => {
-  const { removeProductFromCart } = useContext(CartContext);
+  const { removeProductFromCart, subProductsInTheCart } =
+    useContext(CartContext);
   return (
     <StyledCartProductCard>
       <div className="imageBox">
@@ -23,7 +24,9 @@ export const CartProductCard = ({ product }: IProductCart) => {
         <button
           type="button"
           aria-label="Remover"
-          onClick={() => removeProductFromCart(product.id)}
+          onClick={() => {
+            removeProductFromCart(product.id), subProductsInTheCart();
+          }}
         >
           <MdDelete size={24} />
         </button>

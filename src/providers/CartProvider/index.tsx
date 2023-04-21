@@ -26,10 +26,14 @@ export interface IProductsContext {
   >;
   isFiltered: boolean;
   setIsFiltered: React.Dispatch<React.SetStateAction<boolean>>;
+  countProducts: number;
+  setCountProducts: React.Dispatch<React.SetStateAction<number>>;
   showFilteredProducts: (searchFormData: ISearchFormData) => void;
   addProductToCart: (productId: number) => void;
   removeProductFromCart: (productId: number) => void;
   removeAll: () => void;
+  sumProductsInTheCart: () => void;
+  subProductsInTheCart: () => void;
 }
 
 export const CartContext = createContext({} as IProductsContext);
@@ -40,6 +44,7 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState<ISearchFormData>(); //Guardando data do formSearch para renderização futura.
   const [isFiltered, setIsFiltered] = useState(false);
+  const [countProducts, setCountProducts] = useState(0);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -57,21 +62,21 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
   // *Filter/Search*:
   const showFilteredProducts = (searchFormData: ISearchFormData) => {
     const filterProduct = productsList.filter((product) => {
-      return (
-        product.name
-          .toUpperCase()
-          .includes(searchFormData.search.toUpperCase()) ||
-        product.category
-          .toUpperCase()
-          .includes(searchFormData.search.toUpperCase())
-      );
+      return filteredProducts?.search === ""
+        ? true
+        : product.name
+            .toUpperCase()
+            .includes(searchFormData.search.toUpperCase()) ||
+            product.category
+              .toUpperCase()
+              .includes(searchFormData.search.toUpperCase());
     });
     setProductsList(filterProduct);
   };
 
   // *Add to cart*:
   const addProductToCart = (productId: number) => {
-    if (cartProducts.some(product => product.id === productId)) {
+    if (cartProducts.some((product) => product.id === productId)) {
       toast.error("O item já foi adicionado ao carrinho", {
         autoClose: 2000,
       });
@@ -95,6 +100,15 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
     setCartProducts([]);
   };
 
+  // *Count Products*:
+  const sumProductsInTheCart = () => {
+    return setCountProducts(countProducts + 1);
+  };
+
+  const subProductsInTheCart = () => {
+    return setCountProducts(countProducts - 1);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -106,10 +120,14 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
         setFilteredProducts,
         isFiltered,
         setIsFiltered,
+        countProducts,
+        setCountProducts,
         showFilteredProducts,
         addProductToCart,
         removeProductFromCart,
         removeAll,
+        sumProductsInTheCart,
+        subProductsInTheCart,
       }}
     >
       {children}

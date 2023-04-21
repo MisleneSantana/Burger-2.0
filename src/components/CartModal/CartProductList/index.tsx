@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { CartContext } from "../../../providers/CartProvider";
 
 export const CartProductList = () => {
-  const { cartProducts, setIsCartModalOpen, removeAll } =
+  const { cartProducts, setIsCartModalOpen, setCountProducts, removeAll } =
     useContext(CartContext);
 
   if (cartProducts.length > 0) {
@@ -34,7 +34,7 @@ export const CartProductList = () => {
           $buttonSize="default"
           $buttonStyle="gray"
           onClick={() => {
-            removeAll(), setIsCartModalOpen(false);
+            removeAll(), setIsCartModalOpen(false), setCountProducts(0);
           }}
         >
           Remover todos

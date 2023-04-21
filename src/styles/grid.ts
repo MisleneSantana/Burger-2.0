@@ -10,6 +10,7 @@ export const StyledContainer = styled.div<IStyledContainerProps>`
     containerWidth ? containerWidth : 1000}px;
   margin: 0 auto;
   padding: 10px;
+
 `;
 
 export const StyledGridBox = styled.div`

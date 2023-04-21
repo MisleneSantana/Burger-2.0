@@ -8,10 +8,11 @@ import { StyledContainer } from "../../styles/grid";
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import { CartContext } from "../../providers/CartProvider";
+import { Contador } from "../Contador";
 
 const Header = () => {
   const { userLogout } = useContext(UserContext);
-  const { setIsCartModalOpen } = useContext(CartContext);
+  const { setIsCartModalOpen, cartProducts } = useContext(CartContext);
 
   return (
     <StyledHeader>
@@ -31,6 +32,7 @@ const Header = () => {
                   setIsCartModalOpen(true);
                 }}
               >
+                {cartProducts.length > 0 ? <Contador /> : null}
                 <MdShoppingCart size={28} />
               </button>
               <button type="button" onClick={() => userLogout()}>
