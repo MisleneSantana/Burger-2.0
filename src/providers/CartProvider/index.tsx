@@ -22,7 +22,9 @@ export interface IProductsContext {
   isCartModalOpen: boolean;
   setIsCartModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   cartProducts: IProduct[];
-  setFilteredProducts: React.Dispatch<React.SetStateAction<ISearchFormData>>;
+  setFilteredProducts: React.Dispatch<
+    React.SetStateAction<ISearchFormData | undefined>
+  >;
   isFiltered: boolean;
   setIsFiltered: React.Dispatch<React.SetStateAction<boolean>>;
   countProducts: number;
@@ -65,10 +67,10 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
         ? true
         : product.name
             .toUpperCase()
-            .includes(searchFormData.search.toUpperCase()) ||
+            .includes(searchFormData.search?.toUpperCase() || "") ||
             product.category
               .toUpperCase()
-              .includes(searchFormData.search.toUpperCase());
+              .includes(searchFormData.search?.toUpperCase() || "");
     });
     setProductsList(filterProduct);
   };

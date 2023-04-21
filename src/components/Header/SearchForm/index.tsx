@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { CartContext } from "../../../providers/CartProvider";
 
 export interface ISearchFormData {
-  search: string;
+  search: string | undefined;
 }
 
 export const SearchForm = () => {
