@@ -5,7 +5,7 @@ import { CartProductCard } from "./CartProductCard";
 import { useContext } from "react";
 import { CartContext } from "../../../providers/CartProvider";
 
-export const CartProductList = () => {
+export const CartProductList: any = () => {
   const { cartProducts, setIsCartModalOpen, setCountProducts, removeAll } =
     useContext(CartContext);
 

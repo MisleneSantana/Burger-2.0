@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { ISearchFormData } from "../../components/Header/SearchForm";
+import { any } from "zod";
 
 export interface ICartProviderProps {
   children: React.ReactNode;
@@ -21,9 +22,7 @@ export interface IProductsContext {
   isCartModalOpen: boolean;
   setIsCartModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   cartProducts: IProduct[];
-  setFilteredProducts: React.Dispatch<
-    React.SetStateAction<ISearchFormData | undefined>
-  >;
+  setFilteredProducts: React.Dispatch<React.SetStateAction<ISearchFormData>>;
   isFiltered: boolean;
   setIsFiltered: React.Dispatch<React.SetStateAction<boolean>>;
   countProducts: number;
@@ -81,7 +80,7 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
         autoClose: 2000,
       });
     } else {
-      const productAdd = productsList.find(
+      const productAdd: any = productsList.find(
         (product) => product.id === productId
       );
       setCartProducts([...cartProducts, productAdd]);

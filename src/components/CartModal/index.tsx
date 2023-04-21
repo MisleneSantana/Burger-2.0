@@ -4,6 +4,7 @@ import { StyledCartModalBox } from "./style";
 import { StyledParagraph, StyledTitle } from "../../styles/typography";
 import { useContext } from "react";
 import { CartContext } from "../../providers/CartProvider";
+import { any } from "zod";
 
 export const CartModal = () => {
   const { cartProducts } = useContext(CartContext);
@@ -28,7 +29,7 @@ export const CartModal = () => {
         </header>
 
         <div className="cartBox">
-          {cartProducts?.length > 0 ? (
+          {cartProducts.length > 0 ? (
             <CartProductList />
           ) : (
             <div className="emptyBox">
