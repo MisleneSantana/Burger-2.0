@@ -1,14 +1,13 @@
-import { CartProductCard } from "./CartProductCard";
-
 import { StyledCartProductList } from "./style";
 import { StyledButton } from "../../../styles/button";
 import { StyledParagraph } from "../../../styles/typography";
+import { CartProductCard } from "./CartProductCard";
 import { useContext } from "react";
 import { CartContext } from "../../../providers/CartProvider";
 
 export const CartProductList = () => {
-  const { cartProducts, removeAll } = useContext(CartContext);
-  // console.log(cartProducts);
+  const { cartProducts, setIsCartModalOpen, removeAll } =
+    useContext(CartContext);
 
   if (cartProducts.length > 0) {
     const total = cartProducts
@@ -34,7 +33,9 @@ export const CartProductList = () => {
         <StyledButton
           $buttonSize="default"
           $buttonStyle="gray"
-          onClick={() => removeAll()}
+          onClick={() => {
+            removeAll(), setIsCartModalOpen(false);
+          }}
         >
           Remover todos
         </StyledButton>

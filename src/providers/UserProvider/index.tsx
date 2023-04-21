@@ -100,17 +100,17 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
 
   // *Auto-Login*:
   useEffect(() => {
-    const userToken = localStorage.getItem("@TOKEN");
-    const userId = localStorage.getItem("@USERID");
-
     const userLoggedIn = async () => {
       try {
+        const userToken = localStorage.getItem("@TOKEN");
+        const userId = localStorage.getItem("@USERID");
+
         if (!userToken && !userId) {
           return;
         }
         api.defaults.headers.common.Authorization = `Bearer ${userToken}`;
 
-        const { data } = await api.get(`/users/${userId}`);
+        const { data } = await api.get<IUser>(`/users/${userId}`);
 
         setUser(data);
         navigate("/shop");
@@ -118,6 +118,8 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
         localStorage.removeItem("@TOKEN");
         localStorage.removeItem("@USERID");
         toastError();
+      } finally {
+        setLoading(false);
       }
     };
     userLoggedIn();

@@ -3,14 +3,15 @@ import { CartProductList } from "./CartProductList";
 import { StyledCartModalBox } from "./style";
 import { StyledParagraph, StyledTitle } from "../../styles/typography";
 import { useContext } from "react";
-import { CartContext } from "../../providers/CartProvider";
+import { CartContext, IProduct } from "../../providers/CartProvider";
 
-// interface ICartProductList{
-//   cartProducts: () => JSX.Element | undefined;
+// export interface ICartProductList {
+//   cartProducts: IProduct;
 // }
 
 export const CartModal = () => {
-  const { cartProducts, setIsCartModalOpen } = useContext(CartContext);
+  const { cartProducts } = useContext(CartContext);
+  const { setIsCartModalOpen } = useContext(CartContext);
 
   return (
     <StyledCartModalBox>
@@ -32,7 +33,7 @@ export const CartModal = () => {
 
         <div className="cartBox">
           {cartProducts.length > 0 ? (
-            <CartProductList/>
+            <CartProductList />
           ) : (
             <div className="emptyBox">
               <StyledTitle tag="h3" $fontSize="three" textAlign="center">

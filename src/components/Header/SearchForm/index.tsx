@@ -2,7 +2,7 @@ import { MdSearch } from "react-icons/md";
 import { StyledSearchForm } from "./style";
 import { StyledButton } from "../../../styles/button";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "../../../providers/CartProvider";
 
 export interface ISearchFormData {
@@ -10,26 +10,17 @@ export interface ISearchFormData {
 }
 
 export const SearchForm = () => {
-  const { register, handleSubmit } = useForm<ISearchFormData>();
+  const { register, handleSubmit, setValue } = useForm<ISearchFormData>();
 
-  const {
-    showFilteredProducts,
-    filteredProducts,
-    setFilteredProducts,
-    clearInput,
-    setClearInput,
-    setIsFiltered,
-  } = useContext(CartContext);
+  const { setFilteredProducts, showFilteredProducts, setIsFiltered } =
+    useContext(CartContext);
 
   const submitSearchForm: SubmitHandler<ISearchFormData> = (searchFormData) => {
     setFilteredProducts(searchFormData);
 
     showFilteredProducts(searchFormData);
     setIsFiltered(true);
-
-    setClearInput(filteredProducts);
-    // setClearInput({ search: "" });
-    setFilteredProducts({ search: "" });
+    setValue("search", "");
   };
 
   return (
@@ -45,8 +36,3 @@ export const SearchForm = () => {
     </StyledSearchForm>
   );
 };
-
-// showProducts(filteredProducts);
-// setIsFiltered(true);
-// setFilteredProductsResult(filteredProducts);
-// setFilteredProducts("");

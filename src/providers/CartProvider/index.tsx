@@ -21,10 +21,9 @@ export interface IProductsContext {
   isCartModalOpen: boolean;
   setIsCartModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   cartProducts: IProduct[];
-  filteredProducts: ISearchFormData;
-  setFilteredProducts: React.Dispatch<React.SetStateAction<ISearchFormData | undefined>>;
-  clearInput: {};
-  setClearInput: React.Dispatch<React.SetStateAction<{}>>;
+  setFilteredProducts: React.Dispatch<
+    React.SetStateAction<ISearchFormData | undefined>
+  >;
   isFiltered: boolean;
   setIsFiltered: React.Dispatch<React.SetStateAction<boolean>>;
   showFilteredProducts: (searchFormData: ISearchFormData) => void;
@@ -39,8 +38,7 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
   const [productsList, setProductsList] = useState<IProduct[]>([]);
   const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-  const [filteredProducts, setFilteredProducts] = useState<ISearchFormData>();
-  const [clearInput, setClearInput] = useState({});
+  const [filteredProducts, setFilteredProducts] = useState<ISearchFormData>(); //Guardando data do formSearch para renderização futura.
   const [isFiltered, setIsFiltered] = useState(false);
 
   useEffect(() => {
@@ -56,6 +54,7 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
     loadProducts();
   }, []);
 
+  // *Filter/Search*:
   const showFilteredProducts = (searchFormData: ISearchFormData) => {
     const filterProduct = productsList.filter((product) => {
       return (
@@ -70,9 +69,9 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
     setProductsList(filterProduct);
   };
 
-  // *Adicionar ao carrinho*:
+  // *Add to cart*:
   const addProductToCart = (productId: number) => {
-    if (cartProducts.find((product) => product.id === productId)) {
+    if (cartProducts.some(product => product.id === productId)) {
       toast.error("O item já foi adicionado ao carrinho", {
         autoClose: 2000,
       });
@@ -84,7 +83,7 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
     }
   };
 
-  // *Remover do carrinho*:
+  // *Remove from cart*:
   const removeProductFromCart = (productId: number) => {
     const newCartList = cartProducts.filter(
       (product) => product.id !== productId
@@ -104,10 +103,7 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
         isCartModalOpen,
         setIsCartModalOpen,
         cartProducts,
-        filteredProducts,
         setFilteredProducts,
-        clearInput,
-        setClearInput,
         isFiltered,
         setIsFiltered,
         showFilteredProducts,
@@ -120,18 +116,3 @@ export const CartProvider = ({ children }: ICartProviderProps) => {
     </CartContext.Provider>
   );
 };
-
-// const showFilteredProducts = (searchFormData: ISearchFormData) => {
-//   const filterProduct = productsList.filter((product) => {
-//     return searchProduct.search === ""
-//       ? true
-//       : product.name
-//           .toUpperCase()
-//           .includes(searchFormData.search.toUpperCase()) ||
-//           product.category
-//             .toUpperCase()
-//             .includes(searchFormData.search.toUpperCase());
-//   });
-//   setProductsList(filterProduct);
-//   // console.log(filterProduct);
-// };
