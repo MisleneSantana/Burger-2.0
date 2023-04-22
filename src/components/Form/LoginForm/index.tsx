@@ -12,7 +12,7 @@ export interface ILoginFormData {
   password: string;
 }
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ const LoginForm = () => {
     resolver: zodResolver(loginFormSchema),
   });
 
-  const { login } = useContext(UserContext);
+  const { login, loading } = useContext(UserContext);
 
   const loginFormSubmit: SubmitHandler<ILoginFormData> = (loginFormData) => {
     login(loginFormData);
@@ -45,11 +45,15 @@ const LoginForm = () => {
         {...register("password")}
         error={errors.password}
       />
-      <StyledButton $buttonSize="default" $buttonStyle="green" type="submit">
-        Entrar
+      <StyledButton
+        $buttonSize="default"
+        $buttonStyle="green"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? "Entrando" : "Entrar"}
       </StyledButton>
     </StyledForm>
   );
 };
 
-export default LoginForm;

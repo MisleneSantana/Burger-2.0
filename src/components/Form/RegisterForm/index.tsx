@@ -14,7 +14,7 @@ export interface IRegisterFormData {
   confirmPassword: string;
 }
 
-const RegisterForm = () => {
+export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
@@ -72,4 +72,3 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;

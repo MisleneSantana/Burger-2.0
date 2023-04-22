@@ -1,10 +1,11 @@
-// import error from "../../assets/img/error (1).png";
+import { StyledContainerNotFound } from "../../styles/loading";
+import error from "../../assets/404Error.png";
 
 export const NotFound = () => {
   return (
-    <div>
-      <h1>Página não encontrada</h1>
-      {/* <img src={error} alt="error"></img> */}
-    </div>
+    <StyledContainerNotFound>
+      <h1>Ops, página não encontrada</h1>
+      <img src={error} alt="error"></img>
+    </StyledContainerNotFound>
   );
 };

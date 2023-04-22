@@ -1,16 +1,14 @@
 import { MdShoppingCart, MdLogout } from "react-icons/md";
-
 import { SearchForm } from "./SearchForm";
 import { StyledHeader } from "./style";
 import LogoKenzieBurguer from "../../assets/LogoKenzieBurguer.svg";
-
 import { StyledContainer } from "../../styles/grid";
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import { CartContext } from "../../providers/CartProvider";
 import { Contador } from "../Contador";
 
-const Header = () => {
+export const Header = () => {
   const { userLogout } = useContext(UserContext);
   const { setIsCartModalOpen, cartProducts } = useContext(CartContext);
 
@@ -46,4 +44,3 @@ const Header = () => {
   );
 };
 
-export default Header;
